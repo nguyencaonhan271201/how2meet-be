@@ -15,6 +15,8 @@ export class UserController {
   @Post()
   async create(@Body() user: CreateUserDto): Promise<User>{
     let findDuplicate = await this.userService.findByConditions({ firebase_id: user.firebase_id });
+
+    //This to solve the case of provider login => cannot identify newly created account or old
     if (findDuplicate.length === 0)
       return await this.userService.create(user);
   }
@@ -24,6 +26,7 @@ export class UserController {
     return await this.userService.findAll();
   }
 
+  // Find account by Firebase ID
   @Get('findByFirebaseID/:firebase_id')
   async findOne(@Param('firebase_id') firebase_id: string) {
     let results = await this.userService.findByConditions({ firebase_id: firebase_id });
