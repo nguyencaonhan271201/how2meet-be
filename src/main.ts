@@ -5,6 +5,8 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   //Set up Swagger
+  console.log(process.env.MONGODB_URL);
+  
   const config = new DocumentBuilder()
     .setTitle('How2meet')
     .setDescription('How2Meet API')
@@ -14,8 +16,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
 
   SwaggerModule.setup('api/swagger', app, document);
-  //Connect MongoDB
-
-  await app.listen(3000);
+  
+  await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
