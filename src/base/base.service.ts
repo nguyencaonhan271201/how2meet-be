@@ -40,7 +40,7 @@ export abstract class BaseService<T extends Document> implements IBaseService<T>
 		return objects;
 	}
 
-	async find(conditions: Partial<Record<keyof T, unknown>>): Promise<T[]> {
+	async findByConditions(conditions: Partial<Record<keyof T, unknown>>): Promise<T[]> {
 		return this.model.find(conditions as FilterQuery<T>).exec();
 	}
 
