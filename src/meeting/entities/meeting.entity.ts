@@ -69,6 +69,9 @@ export class Meeting extends BaseEntity {
 	@Prop({default: null})
 	invitations: Invitation[]
 
+	@Prop()
+	minutes: Minute[]
+
 	@Prop({default: null})
 	freetime_slots: Freetime_slot[]
 }
