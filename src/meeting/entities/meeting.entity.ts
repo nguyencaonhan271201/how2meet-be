@@ -60,11 +60,11 @@ export class Meeting extends BaseEntity {
 	@Prop()
 	creator: string;
 
-    @Prop()
-	date: Date;
+  @Prop()
+	date: Date[];
 
 	@Prop({default:  null})
-	time_slots: Date[]
+	time_slots: boolean[]
 
 	@Prop({default: null})
 	invitations: Invitation[]
