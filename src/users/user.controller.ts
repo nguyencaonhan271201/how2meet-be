@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Logger, Post, Param } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Post, Param, Patch } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { UserService } from './user.service';
 
@@ -32,5 +33,18 @@ export class UserController {
     let results = await this.userService.findByConditions({ firebase_id: firebase_id });
     if (results.length > 0)
       return results[0];
+  }
+
+  @Post('updateProfile')
+  async update(@Body() updateUserDto: UpdateUserDto) {
+    this.logger.log(JSON.stringify(updateUserDto));
+    let results = await this.userService.findByConditions({ firebase_id: updateUserDto.firebase_id });
+    if (results.length > 0)
+    {
+      let id = results[0]._id;
+      this.logger.log(id);
+      this.logger.log(updateUserDto);
+      return await this.userService.update(id, updateUserDto);
+    }
   }
 }
