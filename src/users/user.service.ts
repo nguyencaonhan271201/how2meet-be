@@ -12,5 +12,11 @@ export class UserService extends BaseService<User> {
 		super(userModel);
 	}
 
+	async findNameByKeyword(keyword: string): Promise<User[]> {
+		return this.userModel.find({"name": {$regex: keyword, $options: 'i'}}).exec();
+	}
 
-  }
+	async findEmailByKeyword(keyword: string): Promise<User[]> {
+		return this.userModel.find({"email": {$regex: keyword, $options: 'i'}}).exec();
+	}
+}

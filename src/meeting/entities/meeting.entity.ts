@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { BaseEntity } from 'src/base/entities/base.entity';
+import { User } from 'src/users/entities/user.entity';
+import { DateBlocks, PollOptions } from './dateBlocks.entity';
 
 @Schema()
 export class MinuteDetail{
@@ -33,7 +35,6 @@ export class Freetime_slot{
 	@Prop()
 	time_slots: Date[];
 }
-
 @Schema({ _id: false })
 export class Invitation{ 	
 	@Prop()
@@ -55,22 +56,37 @@ export class Meeting extends BaseEntity {
 	description: string;
 
 	@Prop()
-	image: string;
-
-	@Prop()
 	creator: string;
 
-    @Prop()
-	date: Date;
+	@Prop()
+	date: Date[];
 
-	@Prop({default:  null})
-	time_slots: Date[]
+	@Prop()
+	isBonding: boolean;
 
-	@Prop({default: null})
-	invitations: Invitation[]
+	@Prop()
+	dateBlocks: DateBlocks[];
 
-	@Prop({default: null})
-	freetime_slots: Freetime_slot[]
+  @Prop()
+	poll: PollOptions[];
+
+	@Prop()
+	pollLetUserAdd: boolean;
+
+	@Prop()
+	pollIsLimitChoice: boolean;
+
+	@Prop()
+	pollChoicesLimit: number;
+
+	@Prop()
+	isPublic: boolean;
+
+	@Prop()
+	meetingID: string;
+
+	@Prop()
+	invitators: User[];
 }
 
 export const MeetingSchema = SchemaFactory.createForClass(Meeting);
