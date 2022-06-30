@@ -35,6 +35,21 @@ export class UserController {
       return results[0];
   }
 
+  @Get('findUsersByQuery/:query')
+  async findOneByQuery(@Param('query') query: string) {
+    let searchByName = await this.userService.findNameByKeyword(query);
+    let searchByEmail = await this.userService.findEmailByKeyword(query);
+    
+    searchByEmail.forEach((user: any) => {
+      let found = searchByName.some((element: any) => element.firebase_id === user.firebase_id);
+      if (!found) {
+        searchByName.push(user);
+      }
+    })
+
+    return searchByName;
+  }
+
   @Post('updateProfile')
   async update(@Body() updateUserDto: UpdateUserDto) {
     this.logger.log(JSON.stringify(updateUserDto));
