@@ -56,6 +56,9 @@ export class Meeting extends BaseEntity {
 	description: string;
 
 	@Prop()
+	location: string;
+
+	@Prop()
 	creator: string;
 
 	@Prop()

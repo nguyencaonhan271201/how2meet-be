@@ -11,6 +11,9 @@ export class CreateMeetingDto {
 	description: string;
 
 	@ApiProperty()
+	location: string;
+
+	@ApiProperty()
 	creator: string;
 
 	@ApiProperty()
