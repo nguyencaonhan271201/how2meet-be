@@ -20,7 +20,19 @@ export class MeetingController {
   
   @Post()
   async create(@Body() meeting: CreateMeetingDto): Promise<Meeting>{
-    return await this.meetingService.create(meeting);
+    let returnResult = await this.meetingService.create(meeting);
+
+    //Send emails to participants
+    if (Object.keys(returnResult).length > 0) {
+      meeting.invitators.forEach((invitator: User) => {
+        if (invitator.firebase_id !== meeting.creator.firebase_id) {
+          //TODO: SEND INVITATION EMAIL
+
+        }
+      })
+    }
+
+    return returnResult;
   }
 
   @Get('findByFirebaseID/:firebase_id')
@@ -88,6 +100,21 @@ export class MeetingController {
   @Post('updateMeeting/:meeting_id')
   async updateMeetingById(@Param('meeting_id') meeting_id: string, @Body() meetingDto: UpdateMeetingDto) {
     let meeting = await this.findMeetingByMeetingID(meeting_id);
-    return await this.meetingService.update(meeting._id, meetingDto);
+
+    let originalInvitators = [...meeting.invitators];
+
+    let returnResult = await this.meetingService.update(meeting._id, meetingDto);
+
+    if (returnResult) {
+      meetingDto.invitators.forEach((invitator: any) => {
+        let existed = originalInvitators.some((i: any) => i.firebase_id === invitator.firebase_id);
+        if (!existed) {
+          //TODO: SEND INVITATION EMAIL
+
+        }
+      })
+    }
+
+    return returnResult;
   }
 }
