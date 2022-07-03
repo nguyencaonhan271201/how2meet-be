@@ -15,7 +15,7 @@ export class User extends BaseEntity {
 	@Prop()
 	image: string;
 
-    @Prop()
+  @Prop()
 	name: string;
 }
 

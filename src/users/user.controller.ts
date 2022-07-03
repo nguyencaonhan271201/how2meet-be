@@ -52,13 +52,10 @@ export class UserController {
 
   @Post('updateProfile')
   async update(@Body() updateUserDto: UpdateUserDto) {
-    this.logger.log(JSON.stringify(updateUserDto));
     let results = await this.userService.findByConditions({ firebase_id: updateUserDto.firebase_id });
     if (results.length > 0)
     {
       let id = results[0]._id;
-      this.logger.log(id);
-      this.logger.log(updateUserDto);
       return await this.userService.update(id, updateUserDto);
     }
   }
