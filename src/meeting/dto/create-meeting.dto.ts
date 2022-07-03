@@ -14,7 +14,10 @@ export class CreateMeetingDto {
 	location: string;
 
 	@ApiProperty()
-	creator: string;
+	password: string;
+
+	@ApiProperty()
+	creator: User;
 
 	@ApiProperty()
 	date: Date[];

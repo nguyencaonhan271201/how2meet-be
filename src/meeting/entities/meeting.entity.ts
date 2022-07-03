@@ -2,6 +2,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { BaseEntity } from 'src/base/entities/base.entity';
 import { User } from 'src/users/entities/user.entity';
 import { DateBlocks, PollOptions } from './dateBlocks.entity';
+import { Exclude } from 'class-transformer';
+import { ExcludeProperty } from 'nestjs-mongoose-exclude';
 
 @Schema()
 export class MinuteDetail{
@@ -59,7 +61,10 @@ export class Meeting extends BaseEntity {
 	location: string;
 
 	@Prop()
-	creator: string;
+	password: string;
+
+	@Prop()
+	creator: User;
 
 	@Prop()
 	date: Date[];
@@ -89,7 +94,7 @@ export class Meeting extends BaseEntity {
 	meetingID: string;
 
 	@Prop()
-	invitators: User[];
+	invitators: User[];3
 }
 
 export const MeetingSchema = SchemaFactory.createForClass(Meeting);
