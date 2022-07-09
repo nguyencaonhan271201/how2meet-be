@@ -4,6 +4,7 @@ import { SanitizeMongooseModelInterceptor } from 'nestjs-mongoose-exclude';
 import { UpdateUserDto } from 'src/users/dto/update-user.dto';
 import { User } from 'src/users/entities/user.entity';
 import { CreateMeetingMinutesDto } from './dto/create-meeting-minutes.dto';
+import { UpdateMeetingMinutesDto } from './dto/update-meeting-minutes.dto';
 import { MeetingMinutes } from './entities/meetingminutes.entity';
 import { MeetingMinutesService } from './meetingminutes.service';
 
@@ -22,9 +23,19 @@ export class MeetingMinutesController {
     return this.meetingMinutesService.findByConditions({ meetingID: meeting_id });
   }
 
+  @Get('getSingle/:minute_id')
+  async findMinuteById(@Param('minute_id') minute_id: string){
+    return this.meetingMinutesService.findById(minute_id);
+  }
+
   @Post()
   async create(@Body() image: CreateMeetingMinutesDto): Promise<MeetingMinutes>{
     return await this.meetingMinutesService.create(image);
+  }
+
+  @Post(':minute_id')
+  async update(@Param('minute_id') minute_id: string, @Body() updateMeetingMinutesDto: UpdateMeetingMinutesDto) {
+    return await this.meetingMinutesService.update(minute_id, updateMeetingMinutesDto);
   }
 
   @Delete(':minute_id')
