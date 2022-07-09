@@ -7,6 +7,12 @@ export class CreateMeetingMinutesDto {
 	content: string;
 
 	@ApiProperty()
+	title: string;
+	
+	@ApiProperty()
+	description: string;
+
+	@ApiProperty()
 	meetingID: string;
 
 	@ApiProperty()

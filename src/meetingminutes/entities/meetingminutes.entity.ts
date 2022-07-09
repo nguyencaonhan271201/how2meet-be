@@ -10,6 +10,12 @@ export class MeetingMinutes extends BaseEntity {
 	content: string;
 
 	@Prop()
+	title: string;
+
+	@Prop()
+	description: string;
+
+	@Prop()
 	meetingID: string;
 
 	@Prop()

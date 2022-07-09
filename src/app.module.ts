@@ -6,7 +6,7 @@ import { AppService } from './app.service';
 import { MeetingModule } from './meeting/meeting.module';
 import { UserModule } from './users/user.module';
 import { MeetingImagesModule } from './meetingimages/meetingimages.module';
-import { MeetingMinutesModule } from './meetingminutes/meetingminutes.module'
+import { MeetingMinutesModule } from './meetingminutes/meetingminutes.module';
 
 @Module({
   imports: [
