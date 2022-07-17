@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import { PollService } from './Poll.service';
+import { PollService } from './poll.service';
 
 @Controller()
 export class PollController {
