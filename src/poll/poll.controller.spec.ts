@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PollController } from './Poll.controller';
-import { PollService } from './Poll.service';
+import { PollController } from './poll.controller';
+import { PollService } from './poll.service';
 
 describe('PollController', () => {
   let pollController: PollController;
