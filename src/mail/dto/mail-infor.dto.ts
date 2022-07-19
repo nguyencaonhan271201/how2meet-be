@@ -6,6 +6,5 @@ export class MailInformationDto {
     @ApiProperty()
     subject: string;
     @ApiProperty()
-    text: string;
     HTMLBody?:string;
 }

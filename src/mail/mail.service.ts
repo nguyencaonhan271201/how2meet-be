@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
-import {MailInformationDto} from './dto/mail-infor.dto';
+import { MailInformationDto } from './dto/mail-infor.dto';
 
 @Injectable()
 export class SendEmailService {
@@ -10,11 +10,10 @@ export class SendEmailService {
 
     this.mailerService
       .sendMail({
-        to: mailInfo.usermails, // list of receivers
-        from: process.env.SENDER_ADDRESS, // sender address
-        subject: mailInfo.subject, // Subject line
-        text: mailInfo.text, // plaintext body
-        html: mailInfo.HTMLBody?? "", // HTML body content
+        to: mailInfo.usermails,
+        from: `"How2Meet?" <${process.env.SENDER_ADDRESS}>`,
+        subject: mailInfo.subject,
+        html: mailInfo.HTMLBody?? "",
       })
     return 
   }

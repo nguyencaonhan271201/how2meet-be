@@ -4,7 +4,7 @@ import { MailInformationDto } from './dto/mail-infor.dto';
 import { SendEmailService } from './mail.service';
 
 @Controller('sendMail')
-@ApiTags('sendMail')
+@ApiTags('SendMail')
 export class SendEmailController {
   constructor(private readonly sendEmailService: SendEmailService) {}
     

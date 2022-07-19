@@ -1,17 +1,18 @@
-import { Body, Controller, Get, Param, Post, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { SanitizeMongooseModelInterceptor } from 'nestjs-mongoose-exclude';
 import { UpdateUserDto } from 'src/users/dto/update-user.dto';
 import { User } from 'src/users/entities/user.entity';
 import { CreateMeetingDto } from './dto/create-meeting.dto';
 import { UpdateMeetingDto } from './dto/update-meeting.dto';
 import { Meeting } from './entities/meeting.entity';
 import { MeetingService } from './meeting.service';
+import { SendEmailService } from './../mail/mail.service';
 
 @Controller('meeting')
 @ApiTags('Meeting')
 export class MeetingController {
-  constructor(private readonly meetingService: MeetingService) {}
+  constructor(private readonly meetingService: MeetingService,
+    private readonly emailService: SendEmailService) {}
     
   @Get()
   async findAll(){
@@ -27,10 +28,16 @@ export class MeetingController {
       meeting.invitators.forEach((invitator: User) => {
         if (invitator.firebase_id !== meeting.creator.firebase_id) {
           //TODO: SEND INVITATION EMAIL
-
+          this.emailService.sendMail({
+            usermails: [invitator.email],
+            subject: `How2Meet? - Welcome to meeting ${returnResult.title}`,
+            HTMLBody: `<p>Hello, <b style='color: #c37b89'>${invitator.name || invitator.email}</b></p><p>You have been added as a participant of the meeting <b style='color: #c37b89'>${returnResult.title}</b> on <b style='color: #8da459'>How2Meet?</b></p><p>More details about the meeting: <a href='${process.env.FRONTEND_ENDPOINT}/meeting/${returnResult.meetingID}' target='_blank'>Here</a></p><p>Thank you for choosing <b style='color: #8da459'>How2Meet?</b> and hope you will have a great experience with us!</p>`
+          })
         }
       })
     }
+
+    
 
     return returnResult;
   }
@@ -110,7 +117,11 @@ export class MeetingController {
         let existed = originalInvitators.some((i: any) => i.firebase_id === invitator.firebase_id);
         if (!existed) {
           //TODO: SEND INVITATION EMAIL
-
+          this.emailService.sendMail({
+            usermails: [invitator.email],
+            subject: `How2Meet? - Welcome to meeting ${meetingDto.title}`,
+            HTMLBody: `<p>Hello, <b style='color: #c37b89'>${invitator.name || invitator.email}</b></p><p>You have been added as a participant of the meeting <b style='color: #c37b89'>${meetingDto.title}</b> on <b style='color: #8da459'>How2Meet?</b></p><p>More details about the meeting: <a href='${process.env.FRONTEND_ENDPOINT}/meeting/${meetingDto.meetingID}' target='_blank'>Here</a></p><p>Thank you for choosing <b style='color: #8da459'>How2Meet?</b> and hope you will have a great experience with us!</p>`
+          })
         }
       })
     }
