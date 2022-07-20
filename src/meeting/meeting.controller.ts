@@ -128,4 +128,28 @@ export class MeetingController {
 
     return returnResult;
   }
+
+  @Post('reminders')
+  async remindParticipants() {
+    let current = new Date((new Date()).getTime() + 7 * 60 * 60 * 1000);
+    
+    let meetings = await this.meetingService.findAll();
+
+    meetings.forEach((meeting: Meeting) => {
+      let startDate = new Date(new Date(meeting.date[0]).getTime() - 7 * 60 * 60 * 1000);
+
+      if (current.getDate() === startDate.getDate()
+      && current.getMonth() === startDate.getMonth()
+      && current.getFullYear() === startDate.getFullYear()) {
+        meeting.invitators.forEach((invitator: User) => {
+          //TODO: SEND INVITATION EMAIL
+          this.emailService.sendMail({
+            usermails: [invitator.email],
+            subject: `How2Meet? - You have meeting ${meeting.title} today`,
+            HTMLBody: `<p>Hello, <b style='color: #c37b89'>${invitator.name || invitator.email}</b></p><p>This email is to remind that you have meeting <b style='color: #c37b89'>${meeting.title}</b> on <b style='color: #8da459'>How2Meet?</b> today (${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}).</p><p>More details about the meeting: <a href='${process.env.FRONTEND_ENDPOINT}/meeting/${meeting.meetingID}' target='_blank'>Here</a></p><p>Thank you for choosing <b style='color: #8da459'>How2Meet?</b> and hope you will have a great experience with us!</p>`
+          })
+        })
+      }
+    })
+  }
 }
