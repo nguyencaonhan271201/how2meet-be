@@ -9,7 +9,6 @@ import { MeetingModule } from './meeting/meeting.module';
 import { UserModule } from './users/user.module';
 import { MeetingImagesModule } from './meetingimages/meetingimages.module';
 import { MeetingMinutesModule } from './meetingminutes/meetingminutes.module';
-import { ReminderModule } from './reminders/reminders.module';
 
 @Module({
   imports: [
@@ -25,7 +24,6 @@ import { ReminderModule } from './reminders/reminders.module';
     MailModule,
     MeetingImagesModule, 
     MeetingMinutesModule,
-    ReminderModule
  ],
   controllers: [AppController],
   providers: [AppService],
