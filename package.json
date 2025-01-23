@@ -29,7 +29,7 @@
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/swagger": "^5.2.1",
     "class-transformer": "^0.5.1",
-    "mongoose": "^6.3.5",
+    "mongoose": "^6.13.8",
     "nodemailer": "^6.7.6",
     "nestjs-mongoose-exclude": "^1.0.5",
     "reflect-metadata": "^0.1.13",
